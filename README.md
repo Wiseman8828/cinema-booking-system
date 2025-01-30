@@ -57,7 +57,7 @@ src/
 ``` bash
   docker build -t cinema-book-api-ts .
   docker run -d -p 3000:3000 --name cinema-booking cinema-book-api-ts
-``` bash
+```
 
 7. Postman Collection
   A separate file i.e API.postman_collection.json containing a Postman collection of all the APIs is included in the project. You can import it into Postman for quick and easy testing of all endpoints.
