@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "efb9cf3d-6b63-4dc5-bffa-c3981e74de59",
+		"name": "cinema-booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "25911600",
+		"_collection_link": "https://grey-crescent-986589.postman.co/workspace/BambooHr~319d8902-6dde-4b44-9e0c-59c2e12751d7/collection/25911600-efb9cf3d-6b63-4dc5-bffa-c3981e74de59?action=share&source=collection_link&creator=25911600"
+	},
+	"item": [
+		{
+			"name": "create-cinema",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"seats\": 100,\n    \"name\": \"Inox\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/cinemas",
+				"description": "Generated from cURL: curl -X POST http://localhost:3000/cinemas -H \"Content-Type: application/json\" -d '{\"seats\": 10}'"
+			},
+			"response": []
+		},
+		{
+			"name": "single-seat-booking",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": "http://localhost:3000/seats/762a2324-d2f5-4d23-bb13-70c18fb5ccbf/purchase/9",
+				"description": "Generated from cURL: curl -X POST http://localhost:3000/seats/1/purchase/3 -H \"Content-Type: application/json\"\n"
+			},
+			"response": []
+		},
+		{
+			"name": "two-consecutive-seat",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": "http://localhost:3000/seats/19875af6-c307-4771-8380-175bc3eeff28/purchase-consecutive",
+				"description": "Generated from cURL: curl -X POST http://localhost:3000/seats/1/purchase/consecutive -H \"Content-Type: application/json\"\n\n"
+			},
+			"response": []
+		}
+	]
+}
