@@ -8,16 +8,39 @@ export const purchaseSeat:any = async (req: Request, res: Response) => {
     const transaction = await sequelize.transaction();
 
     try {
-        const seat = await Seat.findOne({ where: { cinemaId, seatNumber }, lock: Transaction.LOCK.UPDATE, transaction });
-        if (!seat) return res.status(404).json({ error: 'Seat not found' });
-        if (seat.isBooked) return res.status(400).json({ error: 'Seat already booked' });
+        const seat = await Seat.findOne({
+            where: { cinemaId, seatNumber },
+            attributes: ['id', 'updatedAt', 'isBooked'],
+            transaction
+        });
 
+        if (!seat) {
+            await transaction.rollback();
+            return res.status(404).json({ error: 'Seat not found' });
+        }
+
+        if (seat.isBooked) {
+            await transaction.rollback();
+            return res.status(400).json({ error: 'Seat already booked' });
+        }
+
+        const [updatedRows] = await Seat.update(
+            { isBooked: true },
+            { 
+                where: { id: seat.id}, 
+                transaction 
+            }
+        );
+
+        if (updatedRows === 0) {
+            await transaction.rollback();
+            return res.status(409).json({ error: 'Seat was booked by another user. Try again.' });
+        }
         seat.isBooked = true;
-        await seat.save({ transaction });
         await transaction.commit();
         res.json({ seat });
     } catch (error) {
-        console.log(error)
+        console.error(error);
         await transaction.rollback();
         res.status(500).json({ error: 'Purchase failed' });
     }

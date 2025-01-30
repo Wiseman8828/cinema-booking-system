@@ -18,17 +18,20 @@ app.use("/cinemas", cinema);
 app.use("/seats", seat);
 
 
-(async () => {
+if (process.env.NODE_ENV !== 'test') {
+  (async () => {
     try {
       await sequelize.sync()
-      await sequelize.authenticate()
+      await sequelize.authenticate();
+      console.log('Database connection established successfully.');
       app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`)
       })
-    } catch (error) {
-      console.error("Failed to start the server:", error)
-      process.exit(1)
+    } catch (error: any) {
+      console.error('Failed to start the server:', error.stack || error);
+      process.exit(1);
     }
   })();
+};
 
 export default app;
